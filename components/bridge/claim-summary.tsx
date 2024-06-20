@@ -1,5 +1,4 @@
 import { Claim } from "@/types/claim";
-import Button from "../ui/button";
 import { Wallet } from "../wallet";
 import { useClaim } from "@/hooks/useClaim";
 
@@ -26,9 +25,9 @@ export const ClaimSummary = ({
         </p>
       </div>
       <div className="w-full flex flex-col sm:flex-row justify-between gap-4">
-        <Button fullWidth onClick={onBack}>
+        <button className="btn flex-grow" onClick={onBack}>
           Back
-        </Button>
+        </button>
         <Wallet
           actionBtn={{
             disabled: !claim,

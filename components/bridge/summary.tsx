@@ -1,5 +1,4 @@
 import { BridgeToggleType, useBridgeNetwork } from "@/context/bridge-network";
-import Button from "../ui/button";
 import { Wallet } from "../wallet";
 import { useBridge } from "../../hooks/useBridge";
 
@@ -41,9 +40,9 @@ export const Summary = ({ onBack }: SummaryProps) => {
         </p>
       </div>
       <div className="w-full flex flex-col sm:flex-row justify-between gap-4">
-        <Button fullWidth onClick={onBack}>
+        <button className="btn flex-grow" onClick={onBack}>
           Back
-        </Button>
+        </button>
         <Wallet
           actionBtn={{
             disabled: !coin || !amount || isLoading,

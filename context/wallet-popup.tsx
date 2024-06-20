@@ -3,8 +3,8 @@ import React, { useContext, createContext } from "react";
 import { useConnection } from "../hooks/useConnection";
 import { networks } from "../types/networks";
 import { ModalsActionsEnum, useModalsDispatch } from "./modal";
-import { ButtonColorVariant } from "../components/ui/button";
 import { CheckIcon, CloseIcon } from "../components/ui/icons";
+import { ButtonColorVariant } from "./modal/types";
 
 export enum WalletPopupState {
   DEFAULT = "default",
@@ -83,7 +83,7 @@ const useProvideWalletPopup = () => {
     const modalContent = getModalContent(newState, title, message);
     const actionButtonColor: ButtonColorVariant | undefined =
       newState === WalletPopupState.ERROR
-        ? "danger"
+        ? "error"
         : newState === WalletPopupState.SUCCESS
         ? "primary"
         : undefined;

@@ -84,6 +84,18 @@ export const BridgeCard = () => {
             onBack={() => setStep(1)}
             onContinue={() => setStep(3)}
           />
+          {/* <div className="flex flex-col sm:flex-row justify-between gap-4 items-start">
+            <p className="text-sm">Max transaction cost</p>
+            <p className="text-sm font-medium">$88.46</p>
+          </div>
+          <div className="flex flex-col sm:flex-row justify-between gap-4 items-start">
+            <p className="text-sm">Allowance</p>
+            <p className="text-sm font-medium">0.0 stTara</p>
+          </div>
+          <div className="flex flex-col sm:flex-row justify-between gap-4 items-start">
+            <p className="text-sm">Exchange rate</p>
+            <p className="text-sm font-medium">1 Tara = 1 Lara</p>
+          </div> */}
         </div>
       )}
       {step == 3 && (

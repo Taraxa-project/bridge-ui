@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Button from "./button";
 import { CheckIcon, CopyIcon } from "./icons";
 
 type CopyBtnProps = {
@@ -20,14 +19,13 @@ export const CopyBtn = ({ value }: CopyBtnProps) => {
   };
 
   return (
-    <Button
+    <button
       type="button"
-      color="primary"
-      size="sm"
+      className="btn btn-primary btn-sm"
       disabled={!value}
       onClick={onClick}
     >
       {isCopied ? <CheckIcon /> : <CopyIcon />}
-    </Button>
+    </button>
   );
 };

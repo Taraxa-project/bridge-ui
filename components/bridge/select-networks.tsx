@@ -1,7 +1,6 @@
 "use client";
 
 import { useBridgeNetwork } from "@/context/bridge-network";
-import Button from "../ui/button";
 import { SwapVerticalIcon } from "../ui/icons";
 import { getSingleSelectStyles } from "@/types/custom-select-styles";
 import { useThemeSwitch } from "@/context/theme-switch";

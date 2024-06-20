@@ -6,7 +6,6 @@ import { CustomOption, CustomSingleValue } from "../ui/custom-select";
 import { useThemeSwitch } from "@/context/theme-switch";
 import { Form, Formik, FormikHelpers } from "formik";
 import { number, object, Schema } from "yup";
-import Button from "../ui/button";
 import { useConnection } from "@/hooks/useConnection";
 import { useTokenBalance } from "@/hooks/useTokenBalance";
 import dynamic from "next/dynamic";
@@ -100,9 +99,9 @@ export const SelectCoins = ({ onContinue, onBack }: SelectCoinsProps) => {
                         setAmount(Number(value));
                       }}
                     />
-                    <Button
+                    <button
                       type="button"
-                      color="primary"
+                      className="btn btn-primary"
                       disabled={!account}
                       onClick={() => {
                         setFieldValue("value", tokenBalance);
@@ -110,7 +109,7 @@ export const SelectCoins = ({ onContinue, onBack }: SelectCoinsProps) => {
                       }}
                     >
                       Max
-                    </Button>
+                    </button>
                   </div>
                   {errors.value && (
                     <p className="text-xs text-error uppercase">
@@ -119,17 +118,16 @@ export const SelectCoins = ({ onContinue, onBack }: SelectCoinsProps) => {
                   )}
                 </div>
                 <div className="w-full flex flex-col sm:flex-row justify-between gap-4">
-                  <Button fullWidth onClick={onBack}>
+                  <button className="btn flex-grow" onClick={onBack}>
                     Back
-                  </Button>
-                  <Button
-                    fullWidth
+                  </button>
+                  <button
+                    className="btn btn-primary flex-grow"
                     type="submit"
-                    color="primary"
                     disabled={!coin || !amount}
                   >
                     Continue
-                  </Button>
+                  </button>
                 </div>
               </div>
             </Form>

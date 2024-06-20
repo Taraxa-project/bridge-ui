@@ -1,4 +1,3 @@
-import Button from "../ui/button";
 import { useState } from "react";
 import Image from "next/image";
 import Table, { TableColumn } from "../ui/table";
@@ -95,9 +94,12 @@ export const ClaimTokens = ({ onContinue, onBack }: ClaimTokensProps) => {
         )}
       </span>
     ) : (
-      <Button color="primary" size="sm" onClick={() => onContinue(item)}>
+      <button
+        className="btn btn-primary btn-sm"
+        onClick={() => onContinue(item)}
+      >
         Claim
-      </Button>
+      </button>
     ),
   }));
 
@@ -128,9 +130,9 @@ export const ClaimTokens = ({ onContinue, onBack }: ClaimTokensProps) => {
         }
       />
       <div className="w-full flex flex-col sm:flex-row justify-between gap-4">
-        <Button fullWidth onClick={onBack}>
+        <button className="btn w-full" onClick={onBack}>
           Back
-        </Button>
+        </button>
       </div>
     </div>
   );

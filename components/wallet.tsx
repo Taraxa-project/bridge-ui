@@ -1,17 +1,17 @@
 "use client";
 
 import { MetamaskIcon } from "./ui/icons";
-import Button, { ButtonColorVariant, ButtonSizeVariant } from "./ui/button";
 import { useConnection } from "@/hooks/useConnection";
 import WrongNetwork from "./wrong-network";
+import clsx from "clsx";
 
 export type WalletActionBtn = {
   action: () => void;
   btnName: string;
   disabled?: boolean;
-  btnColor?: ButtonColorVariant;
+  btnColor?: "primary" | "secondary" | "warning" | "error" | "neutral" | "base";
   isLoading?: boolean;
-  size?: ButtonSizeVariant;
+  size?: "xs" | "sm" | "lg";
   fullWidth?: boolean;
 };
 
@@ -24,25 +24,25 @@ export const Wallet = ({ actionBtn }: WalletProps) => {
 
   if (status === "notConnected") {
     return (
-      <Button onClick={() => connect()} color="primary" size="lg">
+      <button className="btn btn-lg btn-primary" onClick={() => connect()}>
         <MetamaskIcon className="text-default-500" />
         Connect Wallet
-      </Button>
+      </button>
     );
   }
 
   if (status === "unavailable") {
     return (
-      <Button size="lg" disabled>
+      <button className="btn btn-lg" disabled>
         Metamask not available
-      </Button>
+      </button>
     );
   }
   if (status === "connecting") {
     return (
-      <Button size="lg" disabled>
+      <button className="btn btn-lg" disabled>
         Connecting <span className="loading loading-dots loading-lg"></span>
-      </Button>
+      </button>
     );
   }
 
@@ -52,18 +52,21 @@ export const Wallet = ({ actionBtn }: WalletProps) => {
 
   if (actionBtn) {
     return (
-      <Button
-        fullWidth={actionBtn.fullWidth}
+      <button
         onClick={actionBtn.action}
-        color={actionBtn.btnColor || "secondary"}
-        size={actionBtn.size}
         disabled={!!actionBtn.disabled}
+        className={clsx(
+          "btn",
+          actionBtn.btnColor ? `btn-${actionBtn.btnColor}` : "btn-secondary",
+          actionBtn.fullWidth && "flex-grow",
+          actionBtn.size && `btn-${actionBtn.size}`
+        )}
       >
         {actionBtn.btnName}
         {!!actionBtn.isLoading && (
           <span className={`loading loading-dots loading-lg`}></span>
         )}
-      </Button>
+      </button>
     );
   }
 };

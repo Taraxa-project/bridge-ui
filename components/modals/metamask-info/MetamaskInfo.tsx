@@ -29,7 +29,6 @@ export const MetamaskInfo = () => {
       name: "Close",
       onClick: closeModal,
       color: actionButtonColor || "primary",
-      size: "lg",
     },
   ];
 

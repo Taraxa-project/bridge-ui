@@ -1,15 +1,15 @@
 "use client";
 
 import React, { useEffect } from "react";
-import Button, { ButtonColorVariant, ButtonSizeVariant } from "./button";
+import clsx from "clsx";
 
 export interface ModalAction {
   name: string;
   disabled?: boolean;
   type?: "button" | "reset" | "submit";
   onClick: (value?: any) => void;
-  color: ButtonColorVariant;
-  size?: ButtonSizeVariant;
+  color: "primary" | "secondary" | "warning" | "error" | "neutral" | "base";
+  size?: "xs" | "sm" | "lg";
 }
 
 export interface ModalProps {
@@ -66,21 +66,24 @@ const Modal: React.FC<ModalProps> = ({
             >
               {modalActions &&
                 modalActions.map((modalAction) => (
-                  <Button
+                  <button
+                    className={clsx(
+                      "btn",
+                      modalAction.color && `btn-${modalAction.color}`,
+                      modalAction.size && `btn-${modalAction.size}`
+                    )}
                     key={`${modalAction.name}-${modalAction.color}`}
                     type={modalAction.type || "button"}
-                    color={modalAction.color}
-                    size={modalAction.size}
                     onClick={modalAction.onClick}
                     disabled={modalAction.disabled}
                   >
                     {modalAction.name}
-                  </Button>
+                  </button>
                 ))}
               {showCancel && (
-                <Button type="button" onClick={closeModal}>
+                <button className="btn" type="button" onClick={closeModal}>
                   {cancelButtonText || "Close"}
-                </Button>
+                </button>
               )}
             </form>
           </div>

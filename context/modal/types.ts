@@ -1,6 +1,22 @@
-import { ButtonColorVariant } from "../../components/ui/button";
 import { AlertType } from "../../types";
 import { ModalsActionsEnum } from "./reducer";
+
+export type ButtonColorVariant =
+  | "primary"
+  | "secondary"
+  | "warning"
+  | "error"
+  | "neutral"
+  | "base";
+export type ButtonSizeVariant = "xs" | "sm" | "lg";
+export type ButtonRadiusVariant =
+  | "none"
+  | "sm"
+  | "md"
+  | "lg"
+  | "xl"
+  | "2xl"
+  | "full";
 
 export type TLoading = {
   open: boolean;
