@@ -5,9 +5,9 @@ import { WalletAddress } from "./wallet-address";
 
 export const Navbar = () => {
   return (
-    <nav className="bg-transparent">
+    <nav className="navbar bg-base-100 fixed w-full z-50">
       <div className="mx-auto container py-6 sm:px-6 lg:px-8">
-        <div className="relative flex h-[60px] items-center justify-between">
+        <div className="relative flex h-[60px] items-center justify-between w-full">
           <div className="flex items-center justify-start">
             <Link
               href="/"

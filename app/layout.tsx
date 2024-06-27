@@ -22,7 +22,7 @@ export default function RootLayout({
         <Providers>
           <div className="relative flex flex-col">
             <Navbar />
-            <main className="flex-grow">{children}</main>
+            <main className="flex-grow mt-40">{children}</main>
           </div>
         </Providers>
       </body>
