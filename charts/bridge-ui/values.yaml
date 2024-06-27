@@ -19,6 +19,8 @@ app:
   taraBridgeAddress: ""
   wtaraTokenAddress: ""
   wethTokenAddress: ""
+  ethereumGraphqlApi: ""
+  taraxaGraphqlApi: ""
 
 imagePullSecrets: []
 nameOverride: ""
