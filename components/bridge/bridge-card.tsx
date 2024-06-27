@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Card } from "../card";
+import { Card } from "../ui/card";
 import { SelectNetworks } from "./select-networks";
 import { SelectCoins } from "./select-coins";
 import { Summary } from "./summary";

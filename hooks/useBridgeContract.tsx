@@ -24,12 +24,12 @@ const chainAddresses: ChainAddress = {
   [TARA_CHAIN_ID]: {
     chainId: TARA_CHAIN_ID,
     contractAddress: taraBridge,
-    seconds: 10,
+    seconds: 3.4,
   },
   [ETH_CHAIN_ID]: {
     chainId: ETH_CHAIN_ID,
     contractAddress: ethBridge,
-    seconds: 4,
+    seconds: 10,
   },
 };
 

@@ -2,7 +2,7 @@
 
 import { utils } from "ethers";
 import { useState } from "react";
-import { Card } from "../card";
+import { Card } from "../ui/card";
 import { ClaimNetwork } from "./claim-network";
 import { SelectedNetwork } from "../selected-network";
 import { useBridgeNetwork } from "@/context/bridge-network";

@@ -14,14 +14,22 @@ export const Countdown = ({
   const [seconds, setSeconds] = useState(initialSeconds);
 
   useEffect(() => {
-    const timer = setInterval(() => setSeconds((s) => s - 1), 1000);
+    const timer = setInterval(() => {
+      setSeconds((s) => {
+        if (s <= 0) {
+          clearInterval(timer);
+          return 0; // Stop at 0 to prevent negative values
+        }
+        return s - 1;
+      });
+    }, 1000);
     return () => clearInterval(timer);
   }, []);
 
-  const days = Math.floor(seconds / 86400);
-  const hours = Math.floor((seconds % 86400) / 3600);
-  const minutes = Math.floor((seconds % 3600) / 60);
-  const displaySeconds = seconds % 60;
+  const days = Math.max(Math.floor(seconds / 86400), 0); // Ensure non-negative
+  const hours = Math.max(Math.floor((seconds % 86400) / 3600), 0);
+  const minutes = Math.max(Math.floor((seconds % 3600) / 60), 0);
+  const displaySeconds = Math.max(seconds % 60, 0);
 
   return (
     <div className="flex gap-4 justify-between text-white p-4">
