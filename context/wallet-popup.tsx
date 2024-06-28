@@ -157,7 +157,7 @@ const useProvideWalletPopup = () => {
             </div>
             {chainId && message && (
               <div className="flex flex-row gap-2">
-                <p>You can view the transaction </p>
+                <p>You can view the transaction</p>
                 <a
                   href={`${networks[chainId].blockExplorerUrl}tx/${message}`}
                   rel="noreferrer"

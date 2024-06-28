@@ -9,16 +9,29 @@ import useChain from "./useChain";
 export const useClaimErc20 = () => {
   const { coin } = useBridgeNetwork();
   const { provider, signer } = useChain();
+  const [fee, setFee] = useState<string | null>(null);
   const { account } = useConnection();
   const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState<string>("");
   const [error, setError] = useState<string>("");
   const { asyncCallback } = useWalletPopup();
 
+  useEffect(() => {
+    const getFeeToClaim = async () => {
+      const claimContract = await getClaimContract();
+      const feeToClain = await claimContract!.feeToClaim(account);
+      const valueInEther = ethers.utils.formatEther(feeToClain.toString());
+      setFee(valueInEther);
+    };
+    void getFeeToClaim();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [account]);
+
   const onClaim = useCallback(
     async (account: string, contract: ethers.Contract) => {
       const feeToClain = await contract!.feeToClaim(account);
       const valueInEther = ethers.utils.formatEther(feeToClain.toString());
+      setFee(valueInEther);
       return await contract!.claim({
         value: ethers.utils.parseEther(valueInEther),
       });
@@ -86,5 +99,5 @@ export const useClaimErc20 = () => {
     resetState();
   }, [account]);
 
-  return { claim, isLoading, status, error, resetState };
+  return { claim, isLoading, status, error, resetState, fee };
 };
