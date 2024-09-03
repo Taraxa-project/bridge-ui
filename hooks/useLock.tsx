@@ -1,57 +1,55 @@
-import { ethers } from "ethers";
+import { ethers, utils } from "ethers";
 import { useCallback, useEffect, useState } from "react";
 import { useContract } from "./useContract";
 import { useConnection } from "./useConnection";
-import { useWalletPopup } from "../context/wallet-popup";
-import { useTokenApprove } from "./useTokenApprove";
-import { useBridgeNetwork } from "../context/bridge-network";
 import { useBridgeContract } from "./useBridgeContract";
+import { useWalletPopup } from "@/context/wallet-popup";
+import { useBridgeNetwork } from "@/context/bridge-network";
+import { useTokenApprove } from "./useTokenApprove";
 
-export const useBurnErc20 = () => {
+export const useLock = () => {
   const { account } = useConnection();
-  const { erc20MintingConnectorContract } = useContract();
+  const { erc20LockingConnectorContract } = useContract();
   const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState<string>("");
   const [error, setError] = useState<string>("");
-  const { coin } = useBridgeNetwork();
-  const decimals = coin?.decimals || 18;
 
   const { approve } = useTokenApprove();
+
   const { asyncCallback } = useWalletPopup();
 
-  const { fromNetwork } = useBridgeNetwork();
+  const { fromNetwork, coin } = useBridgeNetwork();
   const { getBridgeContract } = useBridgeContract(fromNetwork);
 
-  const onBurn = useCallback(
+  const onLock = useCallback(
     async (amount: number): Promise<ethers.providers.TransactionResponse> => {
       const bridgeContract = await getBridgeContract();
       const settlementFee = await bridgeContract!.settlementFee();
 
-      const valueInSmallestUnit = ethers.utils.parseUnits(
-        amount.toString(),
-        decimals
+      return await erc20LockingConnectorContract!.lock(
+        utils.parseUnits(`${amount}`, coin?.decimals),
+        {
+          value: settlementFee,
+        }
       );
-      return await erc20MintingConnectorContract!.burn(valueInSmallestUnit, {
-        value: settlementFee,
-      });
     },
-    [erc20MintingConnectorContract, getBridgeContract, decimals]
+    [erc20LockingConnectorContract, getBridgeContract, coin]
   );
 
-  const burn = async (amount: number, onSuccess: () => void) => {
-    if (!erc20MintingConnectorContract || !account || !amount) {
+  const lock = async (amount: number, onSuccess: () => void) => {
+    if (!account) {
       setStatus("Fail");
       setError("Contract not available");
       return;
     }
     setIsLoading(true);
     approve(
-      erc20MintingConnectorContract.address,
+      erc20LockingConnectorContract!.address,
       amount,
       async () => {
         asyncCallback(
           async () => {
-            return await onBurn(amount);
+            return await onLock(amount);
           },
           () => {
             setIsLoading(false);
@@ -75,12 +73,11 @@ export const useBurnErc20 = () => {
   const resetState = () => {
     setStatus("");
     setError("");
-    setIsLoading(false);
   };
 
   useEffect(() => {
     resetState();
   }, [account]);
 
-  return { burn, isLoading, status, error, resetState };
+  return { lock, isLoading, status, error, resetState };
 };

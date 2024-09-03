@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { useBridgeNetwork } from "../context/bridge-network";
 import { networkConfigs } from "@/config/networkConfig";
 
-export type ConnectorType = "native" | "erc20Minting";
+export type ConnectorType = "native" | "erc20Minting" | "erc20Locking";
 
 export function useConnectorAddress(connectorType: ConnectorType) {
   const { fromNetwork } = useBridgeNetwork();

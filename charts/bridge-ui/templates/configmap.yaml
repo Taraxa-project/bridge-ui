@@ -9,9 +9,12 @@ data:
   ETH_CONNECTOR_ADDRESS: {{ .Values.app.ethConnectorAddress | quote }}
   TARA_ERC20_MINTING_CONNECTOR_ADDRESS: {{ .Values.app.taraErc20MintingConnectorAddress | quote }}
   ETH_ERC20_MINTING_CONNECTOR_ADDRESS: {{ .Values.app.ethErc20MintingConnectorAddress | quote }}
+  USDT_ERC20_MINTING_CONNECTOR_ADDRESS: {{ .Values.app.usdtErc20MintingConnectorAddress | quote }}
+  USDT_ERC20_LOCKING_CONNECTOR_ADDRESS: {{ .Values.app.usdtErc20LockingConnectorAddress | quote }}
   ETH_BRIDGE_ADDRESS: {{ .Values.app.ethBridgeAddress | quote }}
   TARA_BRIDGE_ADDRESS: {{ .Values.app.taraBridgeAddress | quote }}
   WTARA_TOKEN_ADDRESS: {{ .Values.app.wtaraTokenAddress | quote }}
   WETH_TOKEN_ADDRESS: {{ .Values.app.wethTokenAddress | quote }}
+  WUSDT_TOKEN_ADDRESS: {{ .Values.app.wusdtTokenAddress | quote }}
   ETHEREUM_GRAPHQL_API: {{ .Values.app.ethereumGraphqlApi | quote }}
   TARAXA_GRAPHQL_API: {{ .Values.app.taraxaGraphqlApi | quote }}

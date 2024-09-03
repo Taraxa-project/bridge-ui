@@ -13,7 +13,7 @@ export const useTokenBalance = () => {
   const { coin } = useBridgeNetwork();
   const { account } = useConnection();
   const { provider } = useChain();
-  const [balance, setBalance] = useState<number>(0);
+  const [balance, setBalance] = useState<string>("0");
   const [refetch, setRefetch] = useState<number>(0);
   const [error, setError] = useState("");
 
@@ -21,14 +21,14 @@ export const useTokenBalance = () => {
     const fetchBalance = async () => {
       if (!account || !provider || !coin) {
         setError("Account, token address, or provider not available");
-        setBalance(0);
+        setBalance("0");
         return;
       }
       try {
         if (coin?.isNative) {
           const balance = await provider.getBalance(account);
           const valueInEther = ethers.utils.formatEther(balance.toString());
-          setBalance(parseFloat(valueInEther));
+          setBalance(valueInEther);
         } else {
           const tokenAddress = coin?.deployAddress!;
           const tokenContract = new ethers.Contract(
@@ -37,13 +37,13 @@ export const useTokenBalance = () => {
             provider
           );
           const balance = await tokenContract.balanceOf(account);
-          const valueInEther = ethers.utils.formatEther(balance.toString());
-          setBalance(parseFloat(valueInEther));
+          const valueInEther = ethers.utils.formatUnits(balance, coin.decimals);
+          setBalance(valueInEther);
         }
       } catch (error) {
         console.error(error);
         setError("Failed to fetch token balance");
-        setBalance(0);
+        setBalance("0");
       }
     };
     if (account && provider && coin) {

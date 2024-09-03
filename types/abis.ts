@@ -67,15 +67,31 @@ export const ABIs: { [key: string]: contractABI } = {
       },
     ]),
   },
+  ERC20LockingConnector: {
+    name: "ERC20LockingConnector",
+    abi: JSON.stringify([
+      {
+        type: "function",
+        name: "lock",
+        inputs: [
+          {
+            name: "value",
+            type: "uint256",
+            internalType: "uint256",
+          },
+        ],
+        outputs: [],
+        stateMutability: "payable",
+      },
+    ]),
+  },
   NativeConnector: {
     name: "TaraConnector",
     abi: JSON.stringify([
       {
         type: "function",
         name: "lock",
-        inputs: [
-          { name: "amount", type: "uint256", internalType: "uint256" },
-        ],
+        inputs: [{ name: "amount", type: "uint256", internalType: "uint256" }],
         outputs: [],
         stateMutability: "payable",
       },

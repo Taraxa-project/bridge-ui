@@ -84,7 +84,7 @@ export const SelectCoins = ({ onContinue, onBack }: SelectCoinsProps) => {
                         handleChange({
                           target: { name: e.target.name, value },
                         });
-                        setAmount(Number(value));
+                        setAmount(value);
                       }}
                     />
                     <button
@@ -93,7 +93,7 @@ export const SelectCoins = ({ onContinue, onBack }: SelectCoinsProps) => {
                       disabled={!account}
                       onClick={() => {
                         setFieldValue("value", tokenBalance);
-                        setAmount(Number(tokenBalance));
+                        setAmount(tokenBalance);
                       }}
                     >
                       Max

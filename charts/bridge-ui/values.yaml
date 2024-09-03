@@ -15,10 +15,13 @@ app:
   ethConnectorAddress: ""
   taraErc20MintingConnectorAddress: ""
   ethErc20MintingConnectorAddress: ""
+  usdtErc20MintingConnectorAddress: ""
+  usdtErc20LockingConnectorAddress: ""
   ethBridgeAddress: ""
   taraBridgeAddress: ""
   wtaraTokenAddress: ""
   wethTokenAddress: ""
+  wusdtTokenAddress: ""
   ethereumGraphqlApi: ""
   taraxaGraphqlApi: ""
 
