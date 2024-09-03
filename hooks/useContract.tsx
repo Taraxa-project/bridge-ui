@@ -1,14 +1,10 @@
 import { useMemo } from "react";
 import { ethers } from "ethers";
-import { ABIs } from "@/types/abis";
 import useChain from "./useChain";
 import { useConnectorAddress } from "./useConnectorAddress";
 
 export function useContract() {
   const { provider, signer } = useChain();
-  const erc20MintingConnectorAbi = ABIs.ERC20MintingConnector.abi;
-  const erc20LockingConnectorAbi = ABIs.ERC20LockingConnector.abi;
-  const nativeConnectorAbi = ABIs.NativeConnector.abi;
   const nativeConnectorAddress = useConnectorAddress("native");
   const erc20MintingConnectorAddress = useConnectorAddress("erc20Minting");
   const erc20LockingConnectorAddress = useConnectorAddress("erc20Locking");
@@ -21,11 +17,14 @@ export function useContract() {
     }
     const contract = new ethers.Contract(
       nativeConnectorAddress!,
-      nativeConnectorAbi,
+      [
+        "function lock(uint256 amount) payable",
+        "event Locked(address indexed account, uint256 value)",
+      ],
       provider
     );
     return contract.connect(signer);
-  }, [provider, signer, nativeConnectorAddress, nativeConnectorAbi]);
+  }, [provider, signer, nativeConnectorAddress]);
 
   const erc20MintingConnectorContract = useMemo(() => {
     let instance: ethers.Contract | undefined;
@@ -35,16 +34,16 @@ export function useContract() {
     }
     const contract = new ethers.Contract(
       erc20MintingConnectorAddress!,
-      erc20MintingConnectorAbi,
+      [
+        "function burn(uint256 amount) payable",
+        "function lock() payable",
+        "event Burned(address indexed account, uint256 value)",
+        "event Funded(address indexed sender, address indexed connectorBase, uint256 amount)",
+      ],
       provider
     );
     return contract.connect(signer);
-  }, [
-    erc20MintingConnectorAbi,
-    erc20MintingConnectorAddress,
-    provider,
-    signer,
-  ]);
+  }, [erc20MintingConnectorAddress, provider, signer]);
 
   const erc20LockingConnectorContract = useMemo(() => {
     let instance: ethers.Contract | undefined;
@@ -54,16 +53,11 @@ export function useContract() {
     }
     const contract = new ethers.Contract(
       erc20LockingConnectorAddress!,
-      erc20LockingConnectorAbi,
+      ["function lock(uint256 value) payable"],
       provider
     );
     return contract.connect(signer);
-  }, [
-    erc20LockingConnectorAbi,
-    erc20LockingConnectorAddress,
-    provider,
-    signer,
-  ]);
+  }, [erc20LockingConnectorAddress, provider, signer]);
 
   return {
     erc20MintingConnectorContract,

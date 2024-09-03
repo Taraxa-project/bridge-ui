@@ -22,7 +22,7 @@ export const BridgeCard = () => {
   const { fromNetwork, toNetwork, coin, amount, setAmount } =
     useBridgeNetwork();
 
-  const { getBridgeContract } = useBridgeContract(fromNetwork);
+  const { getSettlementFee } = useBridgeContract(fromNetwork);
   const { balance } = useTokenBalance();
 
   const { currentPrice: ethPrice } = useEthCurrentPrice();
@@ -37,11 +37,10 @@ export const BridgeCard = () => {
 
   useEffect(() => {
     (async () => {
-      const bridgeContract = await getBridgeContract();
-      const settlementFee = await bridgeContract!.settlementFee();
+      const settlementFee = await getSettlementFee();
       setSettlementFee(settlementFee);
     })();
-  }, [getBridgeContract]);
+  }, [getSettlementFee]);
 
   useEffect(() => {
     if (step == 1) {

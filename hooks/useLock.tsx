@@ -19,12 +19,11 @@ export const useLock = () => {
   const { asyncCallback } = useWalletPopup();
 
   const { fromNetwork, coin } = useBridgeNetwork();
-  const { getBridgeContract } = useBridgeContract(fromNetwork);
+  const { getSettlementFee } = useBridgeContract(fromNetwork);
 
   const onLock = useCallback(
     async (amount: number): Promise<ethers.providers.TransactionResponse> => {
-      const bridgeContract = await getBridgeContract();
-      const settlementFee = await bridgeContract!.settlementFee();
+      const settlementFee = await getSettlementFee();
 
       return await erc20LockingConnectorContract!.lock(
         utils.parseUnits(`${amount}`, coin?.decimals),
@@ -33,7 +32,7 @@ export const useLock = () => {
         }
       );
     },
-    [erc20LockingConnectorContract, getBridgeContract, coin]
+    [erc20LockingConnectorContract, getSettlementFee, coin]
   );
 
   const lock = async (amount: number, onSuccess: () => void) => {

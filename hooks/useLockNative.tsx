@@ -16,12 +16,11 @@ export const useLockNative = () => {
   const { asyncCallback } = useWalletPopup();
 
   const { fromNetwork } = useBridgeNetwork();
-  const { getBridgeContract } = useBridgeContract(fromNetwork);
+  const { getSettlementFee } = useBridgeContract(fromNetwork);
 
   const onLock = useCallback(
     async (amount: number): Promise<ethers.providers.TransactionResponse> => {
-      const bridgeContract = await getBridgeContract();
-      const settlementFee = await bridgeContract!.settlementFee();
+      const settlementFee = await getSettlementFee();
 
       return await nativeConnectorContract!.lock(
         utils.parseEther(`${amount}`),
@@ -30,7 +29,7 @@ export const useLockNative = () => {
         }
       );
     },
-    [nativeConnectorContract, getBridgeContract]
+    [nativeConnectorContract, getSettlementFee]
   );
 
   const lock = async (amount: number, onSuccess: () => void) => {

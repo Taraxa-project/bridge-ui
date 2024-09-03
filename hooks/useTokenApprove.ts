@@ -3,7 +3,6 @@ import { useCallback, useState } from "react";
 import { useWalletPopup } from "../context/wallet-popup";
 import { useBridgeNetwork } from "../context/bridge-network";
 import useChain from "./useChain";
-import { ABIs } from "../types/abis";
 import { useConnection } from "./useConnection";
 
 export const useTokenApprove = () => {
@@ -77,13 +76,23 @@ export const useTokenApprove = () => {
       return instance;
     }
     const contractAddress = coin?.deployAddress;
-    const abi = ABIs.ERC20.abi;
     if (!contractAddress) {
       setStatus("Fail");
       setError("Contract address missing from coin");
       return;
     }
-    const contract = new ethers.Contract(contractAddress, abi, provider);
+    const contract = new ethers.Contract(
+      contractAddress,
+      [
+        "function allowance(address owner, address spender) view returns (uint256)",
+        "function approve(address spender, uint256 value) returns (bool)",
+        "function balanceOf(address account) view returns (uint256)",
+        "function totalSupply() view returns (uint256)",
+        "function transfer(address to, uint256 value) returns (bool)",
+        "function transferFrom(address from, address to, uint256 value) returns (bool)",
+      ],
+      provider
+    );
     return contract.connect(signer);
   };
 

@@ -7,7 +7,6 @@ import {
   taraBridge,
 } from "../types/addresses";
 import { ethers } from "ethers";
-import { ABIs } from "../types/abis";
 import { BridgeNetwork } from "../types/bridge-networks";
 
 type AddressDetails = {
@@ -46,10 +45,14 @@ export const useBridgeContract = (network: BridgeNetwork) => {
     }
 
     try {
-      const abi = JSON.parse(ABIs.Bridge.abi);
       const contract = new ethers.Contract(
         config.contractAddress,
-        abi,
+        [
+          "function finalizationInterval() view returns (uint256)",
+          "function lastFinalizedBlock() view returns (uint256)",
+          "function appliedEpoch() view returns (uint256)",
+          "function settlementFee() view returns (uint256)",
+        ],
         provider
       );
       return contract;
@@ -58,5 +61,10 @@ export const useBridgeContract = (network: BridgeNetwork) => {
     }
   }, [provider, config.contractAddress]);
 
-  return { provider, config, getBridgeContract };
+  const getSettlementFee = useCallback(async () => {
+    const bridgeContract = await getBridgeContract();
+    return bridgeContract?.settlementFee();
+  }, [getBridgeContract]);
+
+  return { provider, config, getBridgeContract, getSettlementFee };
 };
