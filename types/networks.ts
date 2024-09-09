@@ -1,11 +1,3 @@
-export enum NetworkName {
-  MAINNET = "Mainnet",
-  TESTNET = "Testnet",
-  DEVNET = "Devnet",
-  PRNET = "PRnet",
-  ETH = "Ethereum",
-  HOLESKY = "Holesky",
-}
 export interface Network {
   chainId: number;
   chainName: string;

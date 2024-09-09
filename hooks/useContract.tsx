@@ -1,63 +1,56 @@
 import { useMemo } from "react";
 import { ethers } from "ethers";
 import useChain from "./useChain";
-import { useConnectorAddress } from "./useConnectorAddress";
+import { useBridgeNetwork } from "@/context/bridge-network";
 
 export function useContract() {
   const { provider, signer } = useChain();
-  const nativeConnectorAddress = useConnectorAddress("native");
-  const erc20MintingConnectorAddress = useConnectorAddress("erc20Minting");
-  const erc20LockingConnectorAddress = useConnectorAddress("erc20Locking");
+  const { coin } = useBridgeNetwork();
 
   const nativeConnectorContract = useMemo(() => {
     let instance: ethers.Contract | undefined;
+    const connectorAddress = coin?.connectorAddress;
 
-    if (!provider || !signer) {
+    if (!provider || !signer || !connectorAddress) {
       return instance;
     }
     const contract = new ethers.Contract(
-      nativeConnectorAddress!,
-      [
-        "function lock(uint256 amount) payable",
-        "event Locked(address indexed account, uint256 value)",
-      ],
+      connectorAddress!,
+      ["function lock(uint256 amount) payable"],
       provider
     );
     return contract.connect(signer);
-  }, [provider, signer, nativeConnectorAddress]);
+  }, [coin, provider, signer]);
 
   const erc20MintingConnectorContract = useMemo(() => {
     let instance: ethers.Contract | undefined;
+    const connectorAddress = coin?.connectorAddress;
 
-    if (!provider || !signer) {
+    if (!provider || !signer || !connectorAddress) {
       return instance;
     }
     const contract = new ethers.Contract(
-      erc20MintingConnectorAddress!,
-      [
-        "function burn(uint256 amount) payable",
-        "function lock() payable",
-        "event Burned(address indexed account, uint256 value)",
-        "event Funded(address indexed sender, address indexed connectorBase, uint256 amount)",
-      ],
+      connectorAddress!,
+      ["function burn(uint256 amount) payable", "function lock() payable"],
       provider
     );
     return contract.connect(signer);
-  }, [erc20MintingConnectorAddress, provider, signer]);
+  }, [coin, provider, signer]);
 
   const erc20LockingConnectorContract = useMemo(() => {
     let instance: ethers.Contract | undefined;
+    const connectorAddress = coin?.connectorAddress;
 
-    if (!provider || !signer || !erc20LockingConnectorAddress) {
+    if (!provider || !signer || !connectorAddress) {
       return instance;
     }
     const contract = new ethers.Contract(
-      erc20LockingConnectorAddress!,
+      connectorAddress!,
       ["function lock(uint256 value) payable"],
       provider
     );
     return contract.connect(signer);
-  }, [erc20LockingConnectorAddress, provider, signer]);
+  }, [coin, provider, signer]);
 
   return {
     erc20MintingConnectorContract,

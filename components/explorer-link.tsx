@@ -20,7 +20,7 @@ export const ExplorerLink = ({ value, type }: ExplorerLinkProps) => {
     <Link
       href={url}
       target="_blank"
-      aria-label="Twitter"
+      aria-label="Explorer"
       className="text-xs text-primary hover:underline"
     >
       View on Taraxa Explorer
