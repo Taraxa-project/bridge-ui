@@ -58,7 +58,7 @@ export const coinConfigs: CoinConfig = {
     {
       name: "Tether USD",
       symbol: "USDT",
-      decimals: 18,
+      decimals: 6,
       iconUrl: "/tether-usdt-logo.svg",
       isNative: false,
       baseNetwork: ETH_CHAIN_ID,
@@ -107,7 +107,7 @@ export const coinConfigs: CoinConfig = {
   ],
 };
 
-export const getTokenByConnectorAddress = (connectorAddress: string): Coin => {
+export const getTokenByConnectorAddress = (connectorAddress: string): Coin | boolean => {
   for (const chainId in coinConfigs) {
     for (const coin of coinConfigs[chainId]) {
       if (
@@ -117,5 +117,5 @@ export const getTokenByConnectorAddress = (connectorAddress: string): Coin => {
       }
     }
   }
-  throw new Error(`No coin found with connector address: ${connectorAddress}`);
+  return false;
 };

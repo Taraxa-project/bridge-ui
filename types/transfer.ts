@@ -22,7 +22,11 @@ export interface ApiTransfer {
   block: string;
   timestamp: string;
 }
-export const toTransfer = (data: ApiTransfer, network: string): Transfer => {
+export const toTransfer = (data: ApiTransfer, network: string): Transfer | {} => {
+  const coin = getTokenByConnectorAddress(data.connector);
+  if(!coin) {
+    return {};
+  }
   return {
     type: data.type === "mint" ? "Received" : "Sent",
     coin: getTokenByConnectorAddress(data.connector),
