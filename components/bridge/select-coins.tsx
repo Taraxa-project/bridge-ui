@@ -8,10 +8,12 @@ import { useTokenBalance } from "@/hooks/useTokenBalance";
 import { useCoins } from "@/hooks/useCoins";
 import { Coin } from "@/config/coinConfigs";
 import { Select } from "../select";
+import { BigNumber, utils } from "ethers";
 
 export type SelectCoinsProps = {
   onBack: () => void;
   onContinue: () => void;
+  settlementFee: BigNumber | null;
 };
 
 type StakeForm = { value: number | null };
@@ -25,7 +27,11 @@ const validationSchema: Schema<StakeForm> = object()
   })
   .defined();
 
-export const SelectCoins = ({ onContinue, onBack }: SelectCoinsProps) => {
+export const SelectCoins = ({
+  onContinue,
+  onBack,
+  settlementFee,
+}: SelectCoinsProps) => {
   const { coin, setCoin, amount, setAmount } = useBridgeNetwork();
   const coins = useCoins();
   const { account } = useConnection();
@@ -90,10 +96,24 @@ export const SelectCoins = ({ onContinue, onBack }: SelectCoinsProps) => {
                     <button
                       type="button"
                       className="btn btn-primary"
-                      disabled={!account}
+                      disabled={!account || !settlementFee}
                       onClick={() => {
-                        setFieldValue("value", tokenBalance);
-                        setAmount(tokenBalance);
+                        const balance =
+                          Number(tokenBalance) === 0 ? "0" : tokenBalance;
+                        if (coin && coin.isNative) {
+                          const tokenBalanceWei = utils.parseEther(balance);
+                          const balanceMinusFee = tokenBalanceWei.sub(
+                            settlementFee || BigNumber.from(0)
+                          );
+                          const finalAmount = balanceMinusFee.isNegative()
+                            ? "0"
+                            : utils.formatEther(balanceMinusFee.toString());
+                          setFieldValue("value", finalAmount);
+                          setAmount(finalAmount);
+                        } else {
+                          setFieldValue("value", balance);
+                          setAmount(balance);
+                        }
                       }}
                     >
                       Max
@@ -106,7 +126,10 @@ export const SelectCoins = ({ onContinue, onBack }: SelectCoinsProps) => {
                   )}
                 </div>
                 <div className="w-full flex flex-col sm:flex-row justify-between gap-4">
-                  <button className="btn btn-sm md:btn-md lg:btn-lg flex-grow" onClick={onBack}>
+                  <button
+                    className="btn btn-sm md:btn-md lg:btn-lg flex-grow"
+                    onClick={onBack}
+                  >
                     Back
                   </button>
                   <button

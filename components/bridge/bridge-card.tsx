@@ -112,6 +112,7 @@ export const BridgeCard = () => {
           <SelectCoins
             onBack={() => setStep(1)}
             onContinue={() => setStep(3)}
+            settlementFee={settlementFee}
           />
           {coin !== null && (
             <div className="flex flex-col sm:flex-row justify-between gap-4 items-start">
@@ -121,15 +122,18 @@ export const BridgeCard = () => {
               </p>
             </div>
           )}
-          {settlementFee !== null && (
-            <div className="flex flex-col sm:flex-row justify-between gap-4 items-start">
-              <p className="text-sm">Bridging fee</p>
+
+          <div className="flex flex-col sm:flex-row justify-between gap-4 items-start">
+            <p className="text-sm">Bridging fee</p>
+            {settlementFee !== null ? (
               <p className="text-sm font-medium">
                 {utils.formatEther(settlementFee)}{" "}
                 {fromNetwork.nativeCurrency.symbol}
               </p>
-            </div>
-          )}
+            ) : (
+              <div className="skeleton h-4 w-28"></div>
+            )}
+          </div>
         </div>
       )}
       {step == 3 && (
