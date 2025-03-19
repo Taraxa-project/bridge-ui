@@ -102,12 +102,12 @@ export const SelectCoins = ({
                           Number(tokenBalance) === 0 ? "0" : tokenBalance;
                         if (coin && coin.isNative) {
                           const tokenBalanceWei = utils.parseEther(balance);
-                          const balancePlusFee = tokenBalanceWei.sub(
+                          const balanceMinusFee = tokenBalanceWei.sub(
                             settlementFee || BigNumber.from(0)
                           );
-                          const finalAmount = balancePlusFee.isNegative()
+                          const finalAmount = balanceMinusFee.isNegative()
                             ? "0"
-                            : utils.formatEther(balancePlusFee.toString());
+                            : utils.formatEther(balanceMinusFee.toString());
                           setFieldValue("value", finalAmount);
                           setAmount(finalAmount);
                         } else {
