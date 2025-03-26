@@ -8,7 +8,7 @@ import { SelectCoins } from "./select-coins";
 import { Summary } from "./summary";
 import { useBridgeNetwork } from "../../context/bridge-network";
 import { SelectedNetwork } from "../selected-network";
-import { ChevronForwardIcon } from "../ui/icons";
+import { ChevronForwardIcon, InfoIcon } from "../ui/icons";
 import Image from "next/image";
 import { useBridgeContract } from "@/hooks/useBridgeContract";
 import { useTokenBalance } from "@/hooks/useTokenBalance";
@@ -134,6 +134,15 @@ export const BridgeCard = () => {
               <div className="skeleton h-4 w-28"></div>
             )}
           </div>
+          {fromNetwork.chainId === 1 && (
+            <div className="flex flex-row items-center gap-2">
+              <InfoIcon className="stroke-info shrink-0" />
+              <p className="text-sm font-bold text-info">
+                Please note that there is currently no active ETH/TARA DEX pool
+                on Taraxa, but there is a sizeable USDT/TARA DEX pool.{" "}
+              </p>
+            </div>
+          )}
         </div>
       )}
       {step == 3 && (
