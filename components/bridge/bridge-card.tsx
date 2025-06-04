@@ -134,7 +134,7 @@ export const BridgeCard = () => {
               <div className="skeleton h-4 w-28"></div>
             )}
           </div>
-          {fromNetwork.chainId === 1 && coin?.isNative && (
+          {/* {fromNetwork.chainId === 1 && coin?.isNative && (
             <div className="flex flex-row items-center gap-2">
               <InfoIcon className="stroke-info shrink-0" />
               <p className="text-sm font-bold text-info">
@@ -142,7 +142,7 @@ export const BridgeCard = () => {
                 on Taraxa, but there is a sizeable USDT/TARA DEX pool.{" "}
               </p>
             </div>
-          )}
+          )} */}
         </div>
       )}
       {step == 3 && (

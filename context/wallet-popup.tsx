@@ -188,13 +188,18 @@ const useProvideWalletPopup = () => {
       changeState(WalletPopupState.SUCCESS, "", tx?.transactionHash);
       if (onSuccess) onSuccess();
     } catch (error: any) {
-      console.error("Error:", error);
-      const errorMessage = error.reason
-        ? error.reason.split(":").pop()?.trim()
-        : error.message;
-      console.error("Error:", errorMessage);
+      console.error("Raw Error:", error);
+
+      const errorMessage =
+        error?.reason ??
+        error?.data?.message ??
+        error?.error?.message ??
+        error?.message ??
+        "Unknown error occurred";
+
+      console.error("Parsed Error:", errorMessage);
       onError?.();
-      changeState(WalletPopupState.ERROR, "Error", `${errorMessage}`);
+      changeState(WalletPopupState.ERROR, "Error", errorMessage);
     }
   };
 
