@@ -22,8 +22,6 @@ app:
   wtaraTokenAddress: ""
   wethTokenAddress: ""
   wusdtTokenAddress: ""
-  ethereumGraphqlApi: ""
-  taraxaGraphqlApi: ""
 
 imagePullSecrets: []
 nameOverride: ""

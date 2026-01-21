@@ -26,6 +26,3 @@ export const ETH_CHAIN_ID = 1;
 
 export const ethBridge = process.env.NEXT_PUBLIC_ETH_BRIDGE_ADDRESS || "";
 export const taraBridge = process.env.NEXT_PUBLIC_TARA_BRIDGE_ADDRESS || "";
-
-export const graphqlApiEthereum = process.env.NEXT_PUBLIC_ETHEREUM_GRAPHQL_API || "";
-export const graphqlApiTaraxa = process.env.NEXT_PUBLIC_TARAXA_GRAPHQL_API || "";

@@ -15,7 +15,6 @@ export const useNetworkProviders = () => {
       const provider = new ethers.providers.JsonRpcProvider(
         networks[TARA_CHAIN_ID]?.rpcUrl
       );
-      console.log("TARA Provider Initialized:", provider);
       return provider;
     } catch (error) {
       console.error("Error initializing TARA provider:", error);
@@ -27,7 +26,6 @@ export const useNetworkProviders = () => {
       const provider = new ethers.providers.JsonRpcProvider(
         networks[ETH_CHAIN_ID]?.rpcUrl
       );
-      console.log("ETH Provider Initialized:", provider);
       return provider;
     } catch (error) {
       console.error("Error initializing ETH provider:", error);

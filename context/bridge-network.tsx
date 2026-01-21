@@ -12,11 +12,6 @@ import { Coin } from "@/config/coinConfigs";
 import useCMetamask from "@/hooks/useCMetamask";
 import { TARA_CHAIN_ID } from "@/types/addresses";
 
-export enum BridgeToggleType {
-  BRIDGE = "Bridge",
-  HISTORY = "History",
-}
-
 type BridgeNetworkContextType = {
   bridgeNetworks: BridgeNetwork[];
   fromNetwork: BridgeNetwork;
@@ -27,8 +22,6 @@ type BridgeNetworkContextType = {
   setToNetwork: (network: BridgeNetwork) => void;
   setCoin: (coin: Coin) => void;
   setAmount: (amount: string | null) => void;
-  toggleValue: BridgeToggleType;
-  setToggleValue: (value: BridgeToggleType) => void;
 };
 
 const BridgeNetworkContext = createContext<BridgeNetworkContextType>({
@@ -41,8 +34,6 @@ const BridgeNetworkContext = createContext<BridgeNetworkContextType>({
   setToNetwork: (network: BridgeNetwork) => {},
   setCoin: (coin: Coin) => {},
   setAmount: () => {},
-  toggleValue: BridgeToggleType.BRIDGE,
-  setToggleValue: (value: BridgeToggleType) => {},
 });
 
 export const BridgeNetworkProvider = ({
@@ -56,7 +47,6 @@ export const BridgeNetworkProvider = ({
     bridgeNetworks[0]
   );
   const [toNetwork, setToNetwork] = useState<BridgeNetwork>(bridgeNetworks[1]);
-  const [toggleValue, setToggleValue] = useState(BridgeToggleType.BRIDGE);
   const [coin, setCoin] = useState<Coin | null>(null);
   const [amount, setAmount] = useState<string | null>("0");
 
@@ -87,8 +77,6 @@ export const BridgeNetworkProvider = ({
         setCoin,
         amount,
         setAmount,
-        toggleValue,
-        setToggleValue,
       }}
     >
       {children}

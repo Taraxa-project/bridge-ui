@@ -16,5 +16,3 @@ data:
   WTARA_TOKEN_ADDRESS: {{ .Values.app.wtaraTokenAddress | quote }}
   WETH_TOKEN_ADDRESS: {{ .Values.app.wethTokenAddress | quote }}
   WUSDT_TOKEN_ADDRESS: {{ .Values.app.wusdtTokenAddress | quote }}
-  ETHEREUM_GRAPHQL_API: {{ .Values.app.ethereumGraphqlApi | quote }}
-  TARAXA_GRAPHQL_API: {{ .Values.app.taraxaGraphqlApi | quote }}

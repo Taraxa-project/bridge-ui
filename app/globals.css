@@ -44,10 +44,6 @@ input[type="number"] {
   }
 }
 
-.selectedToggle {
-  color: white !important;
-}
-
 .btn.btn-disabled,
 .btn[disabled],
 .btn:disabled {
